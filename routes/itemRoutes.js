@@ -8,8 +8,7 @@ const router = express.Router();
 
 router.post("/items", checkJwt, async (req, res) => {
   const { name, description, price } = req.body;
-  if (!name || !description || !price)
-    res.status(400).json("name or description or price Is NOT !");
+  if (!name || !description || !price) res.status(400).json("name or description or price Is NOT !");
 
   try {
     const newItem = new Item({ name, description, price });
@@ -32,13 +31,9 @@ router.get("/items", checkJwt, async (req, res) => {
 router.get("/items/:id", checkJwt, async (req, res) => {
   try {
     
-
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(400).json({ message: "Invalid ID format" });
-    }
-
-    const item = await Item.findOne({ _id: req.params.id });
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ message: "Invalid ID format" });
     
+    const item = await Item.findOne({ _id: req.params.id });
     if (!item) return res.status(404).json({ message: "Item not found" });
 
     res.json(item);
@@ -50,13 +45,9 @@ router.get("/items/:id", checkJwt, async (req, res) => {
 router.put("/items/:id", checkJwt, async (req, res) => {
   try {
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(400).json({ message: "Invalid ID format" });
-    }
-    const item = await Item.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ message: "Invalid ID format" });
     
+    const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!item) return res.status(404).json({ message: "Item not found" });
 
     res.json(item);
