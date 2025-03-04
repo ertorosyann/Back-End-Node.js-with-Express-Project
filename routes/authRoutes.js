@@ -10,13 +10,11 @@ const JWT_SECRET = process.env.JWT_SECRET;
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password)
-    return res.status(400).json({ message: "Is Not Username or Password" });
+  if (!username || !password) return res.status(400).json({ message: "Is Not Username or Password" });
 
   try {
     const findUser = await User.findOne({ username });
-    if (findUser)
-      return res.status(400).json({ message: "User already exists" });
+    if (findUser) return res.status(400).json({ message: "User already exists" });
 
     const user = new User({ username, password });
     await user.save();
@@ -29,22 +27,16 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password)
-    return res.status(400).json({ message: "Is not Username or Password !" });
+  if (!username || !password)  return res.status(400).json({ message: "Is not Username or Password !" });
 
   try {
     const user = await User.findOne({ username });
-
     if (!user) return res.status(400).json({ message: "Invalid username " });
 
     const checkPassword = await user.isPasswordCorrect(password);
+    if (!checkPassword) return res.status(400).json({ message: "Invalid password " });
 
-    if (!checkPassword)
-      return res.status(400).json({ message: "Invalid password " });
-
-    const token = jwt.sign({ user: { id: user._id } }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign({ user: { id: user._id } }, JWT_SECRET, { expiresIn: "1h" });
     res.json({ token });
   } catch (error) {
     return res.status(500).json({ message: "Server error" });
