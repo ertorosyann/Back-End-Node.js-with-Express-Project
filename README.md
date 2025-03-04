@@ -24,15 +24,15 @@ Follow these steps to set up the project locally:
    git clone <repository-url>
 
 
-API Endpoints
+## API Endpoints
 
-Authentication
-   POST /auth/register: Registers a new user.
-   POST /auth/login: Logs in a user and returns a JWT token.
-CRUD Operations for Items
-   POST /api/items: Creates a new item.
-   GET /api/items: Retrieves all items.
-   GET /api/items/:id: Retrieves a specific item by its ID.
-   PUT /api/items/:id: Updates an item by its ID.
-   DELETE /api/items/:id: Deletes an item by its ID.
+## Authentication:
+   - **POST**: /auth/register: Registers a new user.
+   - **POST**: /auth/login: Logs in a user and returns a JWT token.
+## RUD Operations for Item:
+   - **POST**: /api/items: Creates a new item.
+   - **GET**: /api/items: Retrieves all items.
+   - **GET**: /api/items/:id: Retrieves a specific item by its ID.
+   - **PUT**: /api/items/:id: Updates an item by its ID.
+   - **DELETE**: /api/items/:id: Deletes an item by its ID.
 
